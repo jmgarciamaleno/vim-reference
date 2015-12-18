@@ -1,20 +1,46 @@
-# Vim-reference.
+# Vim-reference
 
 This is my humble compilation of knowledge about vim.
 
-## Modes.
+## Index
+
+* [1. Modes](#1-modes)
+* [2. Registers](#2-registers)
+* [3. Objects](#3-objects)
+* [4. Commands](#4-commands)
+  * [4.1. Quitting](#41-quitting)
+  * [4.2. Amount and range](#42-amount-and-range)
+  * [4.3. Moving](#43-moving)
+  * [4.4. Editing](#44-editing)
+  * [4.5. Combining commands with objects](#45-combining-commands-with-objects)
+  * [4.6. Powerful Ex commands](#46-powerful-ex-commands)
+  * [4.7. Using shell commands in your buffers](#47-using-shell-commands-in-your-buffers)
+  * [4.8. Folding](#48-folding)
+  * [4.9. Buffers (files opened)](#49-buffers-files-opened)
+  * [4.10. Windows](#410-windows)
+  * [4.11. Tabs](#411-tabs)
+  * [4.12. Regular expressions](#412-regular-expressions)
+    * [4.12.1. Identifiers](#4121-identifiers)
+    * [4.12.2. Sets](#4122-sets)
+    * [4.12.3. Examples](#4123-examples)
+* [5. Macro recording](#5-macro-recording)
+* [6. Tips](#6-tips)
+
+## 1. Modes
+
+Vim has 6 basic modes and 6 additional modes (see :help vim-modes). These are the ones I use:
 
 | Mode | Definition |
 |------|------------|
-| Normal mode | Default mode. Move around and execute commands. Press `ESC` any time to return to it. |
-| Insert mode | Text insert mode. Activated by any insert, append or open command. |
-| Replace mode | Text replace mode. Activated pressing `R`. |
+| Normal mode | Default mode. Move around and execute commands. Pressing `ESC` almost always returns to it. |
 | Visual mode | Text selection mode. Activated with `v`, `shift-v` or `ctrl-v`. |
-| Command mode | Command line mode. Activated pressing `:`. |
+| Insert mode | Text insert mode. Activated by any insert, append or open command. |
+| Command-line mode | Command line mode. Activated pressing `:`. |
+| Replace mode | Text replace mode. Activated pressing `R`. |
 
-## Registers.
+## 2. Registers
 
-Vim has many *clipboards* called *registers*. Registers can be accesed with `"<registerId>`. Numbered registers (0 to 9) are automatically filled with text from yank and delete commands. Named registers (a to z or A to Z) are the ones you can use as you please. You can see all the registers set typing `:reg`. All the registers and their contents are stored in the *.viminfo* file so you retain them between sessions.
+Vim has many *clipboards* called *registers*. Registers can be accessed with `"<registerId>`. Numbered registers (0 to 9) are automatically filled with text from the yank and delete commands. Named registers (a to z or A to Z) are the ones you can use as you please. You can see all the registers set typing `:reg`. All the registers and their contents are stored in the *.viminfo* file so you retain them between sessions.
 
 - The default register `"` is the *unnamed register*. When you yank (copy) or delete something you are using it.
 - The `+` register (`*` in some OSs) is the system clipboard (*xterm-clipboard* feature required, check vim --version).
@@ -25,7 +51,7 @@ E.g:
 - `"aY` Copy the current line to register a.  
 - `"+p` Paste content from the register + (system clipboard).
 
-## Objects.
+## 3. Objects
 
 | Object | Real object |
 |--------|-------------|
@@ -52,9 +78,18 @@ E.g:
 - `vap` (select a sentence) Selects the sentence under cursor.
 - `>ap` (indent a paragraph) Indents the paragraph under cursor. 
 
-## Commands.
+## 4. Commands
 
-### Amount and range.
+### 4.1. Quitting
+
+| Command | Action |
+|---------|--------|
+| :q | Close buffer without saving changes. |
+| :qa | Close all buffers without saving changes (exit vim). |
+| :qa! | Force to close all buffers without saving changes (exit vim). |
+| :x | Exit vim saving all changes. |
+
+### 4.2. Amount and range
 
 Most commands can be preceded by a number that specifies how many times it is to be performed. E.g:
 
@@ -78,7 +113,7 @@ E.g:
 
 You can also select characters/lines/blocks and then press `:` to enter command mode, the selection range is automatically put before your command.
 
-### Moving.
+### 4.3. Moving
 
 | Command | Action |
 |---------|--------|
@@ -111,6 +146,9 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | ?\<text> | Search backward for \<text>. |
 | /\<text>\c | Search forward for \<text> case insensitive. |
 | ?\<text>\c | Search backward for \<text> case insensitive. |
+| n | (After search) Jump to the next found occurrence. |
+| N | (After search) Jump to the previous found occurrence. |
+| :noh | No highlight. Hide the highlighted search finds. |
 | * | Search for the word under the cursor forward. |
 | # | Search for the word under the cursor backward. |
 | ma | Set mark a (a-z or A-Z). |
@@ -143,7 +181,7 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | ctrl-w + k | Move to the window above. |
 | ctrl-w + j | Move to the window below. |
 
-### Editing.
+### 4.4. Editing
 
 | Command | Action |
 |---------|--------|
@@ -166,7 +204,7 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | O | Open a new line above the current one. |
 | v | Visual mode, characters. |
 | V | Visual mode, lines. |
-| ctrl+v | Visual mode, blocks. |
+| ctrl-v | Visual mode, blocks. |
 | gv | Reselect previous selection. |
 | o | (Visual mode) Change side of selection. |
 | r | Replace the character under cursor. |
@@ -191,7 +229,7 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | gd | Go to declaration of identifier under cursor. |
 | gD | Go to global declaration of identifier under cursor. |
 
-### Combining commands with objects.
+### 4.5. Combining commands with objects
 
 Some handy examples:
 
@@ -215,36 +253,39 @@ Some handy examples:
 | df\<char> | Delete inline to next \<char> (inclusive). |
 | vT\<char> | Select inline to previous \<char> (exclusive). |
 
-### Powerful Ex Commands.
+### 4.6. Powerful Ex commands
 
-Ex commands are commands executed with `:`. The \<search> pattern may be a regular expression. These ones are awesome:
+Ex commands are commands executed with `:`. The \<search> pattern may be a regular expression:
 
 | Command | Action |
 |---------|--------|
-| :s/\<search>/\<replace>/[\<options>] | Substitute \<search> with \<replace>. Options: g = all occurrences in the line (not only the first), c = Ask for confirmation. |
+| :s/\<search>/\<replace>/[\<flags>] | Substitute \<search> with \<replace>. Flags: g = all occurrences in the line (not only the first), c = Ask for confirmation. |
 | :norm \<cmd> | Executes \<cmd> on every line selected. |
-| :g/\<search>/\<cmd> | Executes \<cmd> on every line with \<search> |
-| :g!/\<search>/\<cmd> | Executes \<cmd> on every line without \<search> |
+| :g/\<search>/\<cmd> | Executes \<cmd> on every line with \<search>. |
+| :g!/\<search>/\<cmd> | Executes \<cmd> on every line without \<search>. |
 
 E.g:
 - `:%s/dog/cat/gc` In all the lines, substitute all 'dog' occurrences with 'cat' asking for confirmation.
-- `:%norm 0daW` In all the lines, go to the beginning and delete the first WORD.
+- `:%norm 0daW` In all the lines, go to the beginning and delete a WORD.
 - `:g/dog/d` Delete all lines containing 'dog'.
 - `:g!/cat/d` Delete all lines not containing 'cat'. 
 - `:g/cat/y A` Copy all lines containing 'cat' (the final A appends lines to te register).
+- `g/cat/norm ICat here! -> ` Insert 'Cat here! -> ' at the beginning of all the lines containing 'cat'.
+- `g/^#.*\.$/s/.$//` In all the lines that begin with '#' and end with '.', replace the final '.' with nothing.
 
 To insert an `ESC` in your \<cmd> sequence, hit `ctrl-v + ESC`.
 
-### Using shell commands in your buffers.
+### 4.7. Using shell commands in your buffers
 
 The `!` command lets you execute shell commands over your buffers. A few examples:
 
 `:%!python -m json.tool` Fix JSON format passing all lines (%) to the python command.  
-`:1,5!column -t` Indent/align in columns the lines 1 to 5 using the column command.
+`:1,5!column -t` Indent/align in columns the lines 1 to 5 using the column command.  
+`!!cat /home/user/foo.txt` Replaces the current line with the contents of '/home/user/foo.txt'.
 
 Tip: Select first the characters/lines/blocks where you want to apply the command and then press `:`.
 
-### Folding.
+### 4.8. Folding
 
 To activate the folding capabilities in vim, the foldmethod property must be set.
 
@@ -261,24 +302,26 @@ To activate the folding capabilities in vim, the foldmethod property must be set
 | zR | Open all folds. |
 | zm | Close everything one level. |
 
-### Buffers (files opened).
+### 4.9. Buffers (files opened)
 
 ball = All buffers.
 
 | Command | Action |
 |---------|--------|
-| :args ~/* | Opens all files under ~/. |
 | :e \<file> | Edit/reload file. |
+| :w | Write buffer to disk. |
+| :wa | Write all buffers to disk. |
+| :args ~/\* | Opens all files under ~/. |
 | :ls | List buffers. |
 | :b# | Go to buffer # (# can be the number or part of the buffer name). |
 | :bn | Go to next buffer. |
 | :bp | Go to previous buffer. |
 | :bw# | Wipe out buffer #. |
 | :bw * + ctrl-a | Expands * into all open buffers and wipe out all. |
-| ctrl+6 | Jump between last and current buffer. |
+| ctrl-6 | Jump between last and current buffer. |
 | :bufdo \<cmd> | Executes \<cmd> in all open buffers. |
 
-### Windows.
+### 4.10. Windows
 
 | Command | Action |
 |---------|--------|
@@ -295,7 +338,7 @@ ball = All buffers.
 | :vert sf# | Splits vertically file #. |
 | :windo \<cmd> | Executes \<cmd> in all open windows. |
 
-### Tabs.
+### 4.11. Tabs
 
 | Command | Action |
 |---------|--------|
@@ -308,13 +351,63 @@ ball = All buffers.
 | :tabm -# | Move tab # positions left. |
 | :tabdo \<cmd> | Executes \<cmd> in all open tabs. |
 
-## Macro recording.
+### 4.12. Regular expressions
+
+Regular expressions can be used in the \<search> and \<replace> patterns of commands like `/`, `?`, `:s`, `:norm` and `:g`.
+
+#### 4.12.1. Identifiers
+
+| Identifier | Meaning |
+|------------|---------|
+| . | Any single character except newline. |
+| * | Zero or more occurrences of any character. |
+| + | One or more occurrences of any character. |
+| \s | Blank space. |
+| [...] | Any single character specified in the set. |
+| [^...] | Any single character not specified in the set. |
+| ^ | Anchor, beginning of the line. |
+| $ | Anchor, end of line. |
+| \\< | Anchor, begining of word. |
+| \\> | Anchor, end of word. |
+| \(...\) | Grouping, usually used to group conditions. |
+| \n | Contents of nth group. |
+
+#### 4.12.2. Sets
+
+| Set | Meaning |
+|-----|---------|
+| [A-Z] | The set from capital A to capital Z. |
+| [a-z] | The set from lowercase a to lowercase z. |
+| [0-9] | The set from 0 to 9. |
+| [./=+] | The set containing ., /, =, and +. |
+| [-A-F] | The set from capital A to capital F and the dash (dashes must be specified first). |
+| [0-9 A-Z] | The set containing all capital letters and digits and a space. |
+| [A-Z][a-zA-Z] | In the first position, the set from capital A to capital Z, in the second position, the set containing all letters. |
+
+#### 4.12.3. Examples
+
+| RegExp | Meaning |
+|--------|---------|
+| /Cat/ | Matches if the line contains the string 'Cat'. |
+| /^CAT$/ | Matches if the line contains just the string 'CAT'. |
+| /\^[a-zA-Z]/ | Matches if the line starts with any letter. |
+| /\^[a-z].+/ | Matches if the first character of the line is a-z and there is at least one more of any character following it. |
+| /1234$/ | Matches if line ends with 1234. |
+| /\(10&#124;20\)/ | Matches if the line contains 10 or 20. Note the use of ( ) with the pipe symbol to specify the 'or' condition. |
+| /[0-9]*/ | Matches if there are zero or more numbers in the line. |
+| /\^[^#]/ | Matches if the first character is not a '#' in the line. |
+
+Notes:
+- Regular expressions are case sensitive.
+- Regular expressions are to be used where a pattern is specified.
+
+## 5. Macro recording
 
 1. Press q\<key> to start recording, do things.
 2. Hit q to stop recording.
 3. Use @\<key> to execute the macro.
 
-## Tips.
+## 6. Tips
 
 - Avoid to use the right keys of your keyboard (insert, home, page-up, numpad, etc). ESC is your friend.
 - The first thing to learn: Move properly through the buffer. This is the best way to not miss the mouse.
