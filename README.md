@@ -319,6 +319,7 @@ ball = All buffers.
 | :bw# | Wipe out buffer #. |
 | :bw * + ctrl-a | Expands * into all open buffers and wipe out all. |
 | ctrl-6 | Jump between last and current buffer. |
+| #ctrl-6 | Jump between buffer number # and current buffer. |
 | :bufdo \<cmd> | Executes \<cmd> in all open buffers. |
 
 ### 4.10. Windows
@@ -410,10 +411,13 @@ Notes:
 ## 6. Tips
 
 - Avoid to use the right keys of your keyboard (insert, home, page-up, numpad, etc). ESC is your friend.
-- The first thing to learn: Move properly through the buffer. This is the best way to not miss the mouse.
-- Use marks, to jump fast between important points of your buffer. Use `/` and `?` to reach far text.
-- Until you are comfortable moving and yanking, use the selection mode to see what you are yanking.
-- Use named registers to copy content that you will need later, so you can yank and delete freely.
+- The first thing to learn: Move properly through the buffer:
+  - Use motion commands (gg, G, H, M, L, w, %, }, ]], etc).
+  - Use search commands (/, ?, *, #) to reach far text.
+  - Use marks to jump between important points of your buffer.
+  - Decrease the key repeat delay and increase the key repeat speed of your keyboard config to move faster.
+- Until you are comfortable moving and yanking, use the selection mode to see what you are yanking. Remember that the 0 register always store the content of your last yank command.
+- Use named registers to copy content that you will need later, so you can yank and delete freely to the default register.
 - Working with the vim windows is really easy with a few keystrokes, don't be scared of it.
 - If you have ssh access to a remote server where you want to edit files, you can of course install your vim config in it but I prefer to mount files locally using 'sshfs' so you can use your local vim to edit files.
 - Vim is HUGE and has a slow learning curve at the beginning, but with a bit of effort it is impressively rewarding.
