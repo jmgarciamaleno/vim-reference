@@ -335,8 +335,8 @@ ball = All buffers.
 | ctrl-w + = | Resize all windows to the same size. |
 | :sb# | Splits horizontally buffer #. |
 | :vert sb# | Splits vertically buffer #. |
-| :sf# | Splits horizontally file #. |
-| :vert sf# | Splits vertically file #. |
+| :sf \<file> | Splits horizontally \<file>. |
+| :vert sf \<file> | Splits vertically \<file> . |
 | :windo \<cmd> | Executes \<cmd> in all open windows. |
 
 ### 4.11. Tabs
