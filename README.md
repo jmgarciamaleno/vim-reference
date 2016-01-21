@@ -69,8 +69,8 @@ E.g:
 
 You can operate over any object:
 
-- `<command>a<object>` Operate an object.
-- `<command>i<object>` Operate inner/inside object.
+- `<command>a<object>` Operate over an object.
+- `<command>i<object>` Operate inner/inside an object.
 
 E.g:
 - `ci'` (change inside quotes) Removes the text between the next quotes and enters insert mode.
@@ -216,8 +216,8 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | gu | Lowercase. |
 | gU | Uppercase. |
 | J | Join two lines. |
-| ctrl-A | Increments the number under cursor. |
-| ctrl-X | Decrements the number under cursor. |
+| ctrl-a | Increments the number under cursor. |
+| ctrl-x | Decrements the number under cursor. |
 | . | Repeat last command. |
 | == | Fix line indentation. |
 | > | Indent line or selected block. |
@@ -287,8 +287,10 @@ Tip: Select first the characters/lines/blocks where you want to apply the comman
 
 ### 4.8. Folding
 
-To activate the folding capabilities in vim, the foldmethod property must be set.
+To activate the folding capabilities in vim, the foldenable and foldmethod properties must be set.
 
+`set foldenable` Activate folding.
+`set nofoldenable` Deactivate folding.
 `set foldmethod=syntax` Common values: indent, syntax.  
 `set foldcolumn=4` Number of columns that will be used to show the indentation levels on the left.
 
