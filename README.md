@@ -289,8 +289,8 @@ Tip: Select first the characters/lines/blocks where you want to apply the comman
 
 To activate the folding capabilities in vim, the foldenable and foldmethod properties must be set.
 
-`set foldenable` Activate folding.
-`set nofoldenable` Deactivate folding.
+`set foldenable` Activate folding.  
+`set nofoldenable` Deactivate folding.  
 `set foldmethod=syntax` Common values: indent, syntax.  
 `set foldcolumn=4` Number of columns that will be used to show the indentation levels on the left.
 
