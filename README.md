@@ -227,12 +227,12 @@ You can operate over any object:
 Some handy examples:
 
 - `dw` (Delete to word) Delete till the start of the next word.
-- `caw` (Change a word) Removes the word under the cursor and enters insert mode.
+- `caw` (Change a word) Remove the word under the cursor and enters insert mode.
 - `gUaw` (Uppercase a word) Uppercase all the characters of the word under cursor.
-- `ci'` (Change inside quotes) Removes the text between the next quotes and enters insert mode.
-- `dit` (Delete inside tag) Removes the text between the opening and closing marks of the tag.
-- `yas` (Yank a sentence) Yanks the sentence under cursor.
-- `>ap` (Indent a paragraph) Indents the paragraph under cursor. 
+- `ci'` (Change inside quotes) Remove the text between the next quotes and enters insert mode.
+- `dit` (Delete inside tag) Remove the text between the opening and closing marks of the tag.
+- `vas` (Select a sentence) Select the sentence under cursor.
+- `>ap` (Indent a paragraph) Indent the paragraph under cursor. 
 
 ## Amount and range
 
@@ -247,7 +247,7 @@ Most commands can be preceded by a range, the command will work only in the line
 | Range | Reach |
 |-------|-------|
 | n,m | Lines n to m |
-|  | Current line |
+| . | Current line |
 | $ | Last line |
 | % | All lines in the buffer |
 
@@ -362,7 +362,7 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | J | Join two lines |
 | ctrl-a | Increments the number under cursor |
 | ctrl-x | Decrements the number under cursor |
-|  | Repeat last command |
+| . | Repeat last command |
 | == | Fix line indentation |
 | > | Indent line or selected block |
 | < | Unindent line or selected block |
@@ -413,7 +413,7 @@ Regular expressions can be used in the \<search> and \<replace> patterns of comm
 
 | Identifier | Meaning |
 |------------|---------|
-|  | Any single character except newline |
+| . | Any single character except newline |
 | * | Zero or more occurrences of any character |
 | + | One or more occurrences of any character |
 | \s | Blank space |
