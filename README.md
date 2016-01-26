@@ -1,6 +1,6 @@
 # Vim-reference
 
-This is my humble compilation of knowledge about vim. This are just the things I use, vim has way more.
+This is my humble compilation of knowledge about vim. This is just the stuff I use, vim has way more.
 
 ## Index
 
@@ -119,28 +119,28 @@ ball = All buffers.
 | ctrl-w + k | Jump to the window above |
 | ctrl-w + l | Jump to the window to the right |
 | ctrl-w + H | Move current window left |
-| ctrl-w + J | Move current window bottom |
-| ctrl-w + K | Move current window above |
+| ctrl-w + J | Move current window down |
+| ctrl-w + K | Move current window up |
 | ctrl-w + L | Move current window right |
-| :resize # | I.e. :resize 40 |
-| :vertical resize # | I.e. :vertical resize 40 |
+| :resize # | Resize current window to height = # |
+| :vertical resize # | Resize current window to width = # |
 | ctrl-w + = | Resize all windows to the same size |
 | :sb# | Splits horizontally buffer # |
-| :vert sb# | Splits vertically buffer # |
+| :vertical sb# | Splits vertically buffer # |
 | :sf \<file> | Splits horizontally \<file> |
-| :vert sf \<file> | Splits vertically \<file> |
+| :vertical sf \<file> | Splits vertically \<file> |
 | :windo \<cmd> | Executes \<cmd> in all open windows |
 
 ## Registers
 
 `:help registers`
 
-Vim has many *clipboards* called *registers*. Registers can be accessed with `"<registerId>`. Numbered registers (0 to 9) are automatically filled with text from the yank and delete commands. Named registers (a to z or A to Z) are the ones you can use as you please. You can see all the registers set typing `:reg`. All the registers and their contents are stored in the *.viminfo* file so you retain them between sessions.
+Vim has many *clipboards* called *registers*. Registers can be accessed with `"<regId>`. Numbered registers (0 to 9) are automatically filled with text from the yank, cut an delete commands. Named registers (a to z or A to Z) are the ones you can use as you please. You can see all the registers set typing `:reg`. All the registers and their contents are stored in the *.viminfo* file so you retain them between sessions.
 
-- The default register `"` is the *unnamed register*. When you yank (copy) or delete something you are using it.
+- The default register `"` is the *unnamed register*. When you yank (copy), cut or delete something you are using it.
 - The `+` register (`*` in some OSs) is the system clipboard (*xterm-clipboard* feature required, check vim --version).
-- The `0` register always store the content of the last yank comand.
-- The `.` register stores your last typed text.
+- The `0` register always stores the content of the last yank comand.
+- The `.` register always stores your last typed text.
 
 E.g:
 - `"aY` Copy the current line to register a.  
@@ -154,28 +154,29 @@ To activate the folding capabilities in vim, the foldenable and foldmethod prope
 
 `set foldenable` Activate folding.  
 `set nofoldenable` Deactivate folding.  
-`set foldmethod=syntax` Common values: indent, syntax.  
+`set foldmethod=syntax` How to indent. Common values: indent, syntax.  
 `set foldcolumn=4` Number of columns that will be used to show the indentation levels on the left.
 
 | Command | Action |
 |---------|--------|
 | zo | Open fold |
-| zO | Open fold and subfolds |
+| zO | Open fold recursively |
 | zc | Close fold |
-| zC | Close all folds |
+| zC | Close fold recursively |
 | zr | Open everything one level (reduce folding) |
 | zR | Open all folds |
-| zm | Close everything one level |
+| zm | Close everything one level (more folding) |
+| zM | Close all folds |
 
 ## Vimdiff
 
 `:help diff`
 
-Vim can open up to four files to work with their differences. You can open them from the console using the 'vimdiff' command:
+Vim can open up to four files to work with their differences. You can open them from the console using the `vimdiff` command:
 
 `vimdiff <file1> <file2> [<file3> [<file4>]]`
 
-Or you can open the buffers in vim windows and set the diff mode in all of them:
+Or you can open the buffers that you want to compare in vim windows and set the diff mode in all of them:
 
 `:windo diffthis`
 
@@ -183,10 +184,10 @@ Or you can open the buffers in vim windows and set the diff mode in all of them:
 |---------|--------|
 | ]c | Jump to the next difference |
 | [c | Jump to the previous difference |
-| :diffget | Obtain the difference from the other buffer |
-| :diffput | Put the difference in the other buffer |
 | do | Obtain the difference from the other buffer |
+| :diffget | Obtain the difference from the other buffer |
 | dp | Put the difference in the other buffer |
+| :diffput | Put the difference in the other buffer |
 | :diffupdate | Refresh the buffers |
 
 To leave the diff mode and return to normal mode:
@@ -197,9 +198,9 @@ To leave the diff mode and return to normal mode:
 
 `:help recording`
 
-1. Press q\<key> to start recording, do things.
-2. Hit q to stop recording.
-3. Use @\<key> to execute the macro.
+1. Press `q<key>` to start recording, do things.
+2. Hit `q` to stop recording.
+3. Use `@<key>` to execute the macro.
 
 ## Objects
 
@@ -221,8 +222,8 @@ To leave the diff mode and return to normal mode:
 
 You can operate over any object:
 
-- `<command>a<object>` Operate over an object.
-- `<command>i<object>` Operate inner/inside an object.
+- `<cmd>a<object>` Operate over an object.
+- `<cmd>i<object>` Operate inner/inside an object.
 
 Some handy examples:
 
@@ -252,9 +253,9 @@ Most commands can be preceded by a range, the command will work only in the line
 | % | All lines in the buffer |
 
 E.g:
-- `:1.5d` Delete lines 1 to 5.  
-- `:.,$y` Yank (copy) from current line to the last line.  
-- `:%>` Indent all lines in the buffer.  
+- `:1.5d` Delete lines 1 to 5  
+- `:.,$y` Yank (copy) from current line to the last line  
+- `:%>` Indent all lines in the buffer  
 
 You can also select characters/lines/blocks and then press `:` to enter command mode, the selection range is automatically put before your command.
 
@@ -297,7 +298,7 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | ctrl-e | Move screen up without moving cursor |
 | z\<enter> | Move screen so the current line is first |
 | zz | Move screen so the current line is middle |
-| ' | Go back to last edited line |
+| '. | Go back to last edited line |
 | g; | Go back to last edited position |
 
 ## Moving in line
@@ -306,8 +307,8 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 |---------|--------|
 | 0 | Start of the current line |
 | ^ | First non blank character of the current line |
-| $ | End of the current line |
 | g\_ | Last non blank character of the current line |
+| $ | End of the current line |
 | gm | Go to the middle of the screen in the current line |
 | #&#124; | Go to the column number # in the current line |
 | f\<char> | Next occurrence of character \<char> in line (inclusive) |
@@ -339,11 +340,11 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | yy or Y | Yank line |
 | d | Delete (cut) |
 | dd | Delete line |
-| S | Delete line and insert mode |
+| S | Substitute line |
 | D | Delete to the end of the line |
 | C | Change to the end of the line |
-| p | Paste after the cursor |
-| P | Paste before the cursor |
+| p | Paste after the cursor/below the current line |
+| P | Paste before the cursor/above the current line |
 | o | Open a new line below the current one |
 | O | Open a new line above the current one |
 | v | Visual mode, characters |
@@ -351,7 +352,7 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | ctrl-v | Visual mode, blocks |
 | gv | Reselect previous selection |
 | o | (Visual mode) Change side of selection |
-| r | Replace the character under cursor |
+| r\<char> | Replace the character under cursor with \<char> |
 | R | Replace mode |
 | u | Undo one change |
 | U | Undo all changes in line |
@@ -364,8 +365,8 @@ You can also select characters/lines/blocks and then press `:` to enter command 
 | ctrl-x | Decrements the number under cursor |
 | . | Repeat last command |
 | == | Fix line indentation |
-| > | Indent line or selected block |
-| < | Unindent line or selected block |
+| > | Indent line or selection |
+| < | Unindent line or selection |
 | gf | Open file under cursor |
 | gg=G | Go to the first line and fix indentation to the last one (everything) |
 | ctrl-n | (Insert mode) Complete next coincidence of typed word |
@@ -380,17 +381,17 @@ Ex commands are commands executed with `:`. The \<search> pattern may be a regul
 | Command | Action |
 |---------|--------|
 | :s/\<search>/\<replace>/[\<flags>] | Substitute \<search> with \<replace>. Flags: g = all occurrences in the line (not only the first), c = Ask for confirmation |
-| :norm \<cmd> | Executes \<cmd> on every line selected |
-| :g/\<search>/\<cmd> | Executes \<cmd> on every line with \<search> |
-| :g!/\<search>/\<cmd> | Executes \<cmd> on every line without \<search> |
+| :normal \<normal_cmd> | Executes \<normal_cmd> (normal mode command) on every line selected |
+| :g/\<search>/\<ex_cmd> | Global. Executes \<ex_cmd> (command line command) on every line with \<search> |
+| :g!/\<search>/\<ex_cmd> | Global. Executes \<ex_cmd> (command line command) on every line without \<search> |
 
 E.g:
 - `:%s/dog/cat/gc` In all the lines, substitute all 'dog' occurrences with 'cat' asking for confirmation.
-- `:%norm 0daW` In all the lines, go to the beginning and delete a WORD.
+- `:%normal 0daW` In all the lines, go to the beginning and delete a WORD.
 - `:g/dog/d` Delete all lines containing 'dog'.
 - `:g!/cat/d` Delete all lines not containing 'cat'. 
 - `:g/cat/y A` Copy all lines containing 'cat' (the final A appends lines to te register).
-- `g/cat/norm ICat here! -> ` Insert 'Cat here! -> ' at the beginning of all the lines containing 'cat'.
+- `g/cat/normal ICat here! -> ` Insert 'Cat here! -> ' at the beginning of all the lines containing 'cat'.
 - `g/^#.*\.$/s/.$//` In all the lines that begin with '#' and end with '.', replace the final '.' with nothing.
 
 To insert an `ESC` in your \<cmd> sequence, hit `ctrl-v + ESC`.
@@ -407,7 +408,7 @@ Tip: Select first the characters/lines/blocks where you want to apply the comman
 
 ## Regular expressions
 
-Regular expressions can be used in the \<search> and \<replace> patterns of commands like `/`, `?`, `:s`, `:norm` and `:g`.
+Regular expressions can be used in the \<search> and \<replace> patterns of commands like `/`, `?`, `:s`, `:normal` and `:g`.
 
 ### Identifiers
 
@@ -457,16 +458,16 @@ Notes:
 
 ## Tips
 
-- Avoid to use the right keys of your keyboard (insert, home, page-up, numpad, etc). ESC is your friend.
+- Avoid to use the keys on the right side of the keyboard (insert, home, page-up, numpad, etc). `ESC` is your friend.
 - The first thing to learn: Move properly through the buffer:
-  - Use motion commands (gg, G, H, M, L, w, %, }, ]], etc).
-  - Use search commands (/, ?, *, #) to reach far text.
+  - Use motion commands (`gg`, `G`, `H`, `M`, `L`, `w`, `W`, `f<char>`, `%`, `}`, `]]`, etc).
+  - Use search commands (`/`, `?`, `*`, `#`) to reach far text.
   - Use marks to jump between important points of your buffer.
   - Decrease the key repeat delay and increase the key repeat speed of your keyboard config to move faster.
-- Until you are comfortable moving and yanking, use the selection mode to see what you are yanking. Remember that the 0 register always store the content of your last yank command.
+- Until you are comfortable moving and yanking, use the selection mode to see what you are yanking. Remember that the `0` register always store the content of your last yank command.
 - Use named registers to copy content that you will need later, so you can yank and delete freely to the default register.
 - Working with the vim windows is really easy with a few keystrokes, don't be scared of it.
-- If you have ssh access to a remote server where you want to edit files, you can of course install your vim config in it but I prefer to mount files locally using 'sshfs' so you can use your local vim to edit files.
+- If you have ssh access to a remote server where you want to edit files, you can of course install your vim config in it but I prefer to mount files locally using `sshfs` so you can use your local vim to edit files.
 - Vim is HUGE and has a slow learning curve at the beginning, but with a bit of effort it is impressively rewarding.
 
 ---
