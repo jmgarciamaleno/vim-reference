@@ -13,6 +13,7 @@ This is my humble compilation of knowledge about vim. This is just the stuff I u
 * [Windows](#windows)
 * [Registers](#registers)
 * [Folding](#folding)
+* [Vimgrep](#vimgrep)
 * [Vimdiff](#vimdiff)
 * [Macro recording](#macro-recording)
 * [Objects](#objects)
@@ -167,6 +168,25 @@ To activate the folding capabilities in vim, the foldenable and foldmethod prope
 | zR | Open all folds |
 | zm | Close everything one level (more folding) |
 | zM | Close all folds |
+
+## Vimgrep
+
+`:help vimgrep`
+
+`:vimgrep` is the vim tool to search text in files or folders using its own powerful patterns. Matches are written to the vim error list, accesible with `:copen`.
+
+| Command | Action |
+|---------|--------|
+| :vimgrep /\<pattern>[\c]/[g][j] \<file> ... | Search for \<pattern> in the given file/s or folder/s. Optional flags: \c = case insensitive, g = all occurrences in line, j = don't open the first match file |
+| :copen | Open the error list (matches found) |
+| :cn | Next match |
+| :cp | Previous match |
+
+To search files under subfolders, the `**` wildcard may be used (:help starstar-wildcard).
+
+E.g:
+
+- `:vimgrep /cat\c/g cats/**/*.txt | copen` Search for 'cat' case insensitive, matching all occurrences of each line in .txt files under the 'cats/' folder recursively and open the list of matches.
 
 ## Vimdiff
 
