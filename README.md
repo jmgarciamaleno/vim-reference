@@ -1,6 +1,6 @@
 # Vim-reference
 
-This is my humble compilation of knowledge about vim. This is just the stuff I use, vim has way more.
+My humble compilation of knowledge about vim. This is just the stuff I use, vim has way more.
 
 ## Index
 
