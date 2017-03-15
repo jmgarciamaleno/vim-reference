@@ -400,12 +400,14 @@ Ex commands are commands executed with `:`. The \<search> pattern may be a regul
 
 | Command | Action |
 |---------|--------|
+| :m | Move line |
 | :s/\<search>/\<replace>/[\<flags>] | Substitute \<search> with \<replace>. Flags: g = all occurrences in the line (not only the first), c = Ask for confirmation |
 | :normal \<normal_cmd> | Executes \<normal_cmd> (normal mode command) on every line selected |
 | :g/\<search>/\<ex_cmd> | Global. Executes \<ex_cmd> (command line command) on every line with \<search> |
 | :g!/\<search>/\<ex_cmd> | Global. Executes \<ex_cmd> (command line command) on every line without \<search> |
 
 E.g:
+- `:m$` Move the current line to the last line.
 - `:%s/dog/cat/gc` In all the lines, substitute all 'dog' occurrences with 'cat' asking for confirmation.
 - `:%normal 0daW` In all the lines, go to the beginning and delete a WORD.
 - `:g/dog/d` Delete all lines containing 'dog'.
